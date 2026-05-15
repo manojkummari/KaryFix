@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: 45 93% 58%;
+    --color-secondary: 0 0% 10%;
+    --color-accent: 45 100% 51%;
+    --color-dark: 0 0% 7%;
+    --color-light: 45 100% 96%;
+  }
+
+  body {
+    @apply bg-neutral-900 text-neutral-100;
+  }
+}
+
+@layer utilities {
+  .bg-primary {
+    background-color: hsl(var(--color-primary));
+  }
+
+  .bg-secondary {
+    background-color: hsl(var(--color-secondary));
+  }
+
+  .bg-accent {
+    background-color: hsl(var(--color-accent));
+  }
+
+  .text-primary {
+    color: hsl(var(--color-primary));
+  }
+
+  .text-accent {
+    color: hsl(var(--color-accent));
+  }
+
+  .border-primary {
+    border-color: hsl(var(--color-primary));
+  }
+
+  .border-accent {
+    border-color: hsl(var(--color-accent));
+  }
+}
