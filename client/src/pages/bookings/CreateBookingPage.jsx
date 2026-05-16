@@ -167,29 +167,33 @@ const CreateBookingPage = () => {
       
       let model;
       let result;
-      const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro-vision'];
+      const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro-vision', 'gemini-2.0-flash-exp'];
+      const apiVersions = ['v1', 'v1beta'];
       let lastError = null;
 
       const prompt = "You are a professional repair technician assistant. Analyze this image of a damaged product, device, or problem. Identify the object and the visible damage or issue. Provide a concise, clear, and professional problem description (under 3 sentences) that a technician can use to understand what needs to be fixed. Do not use conversational filler, just provide the description.";
 
       for (const modelName of modelsToTry) {
-        try {
-          console.log(`Trying Gemini model: ${modelName}...`);
-          model = genAI.getGenerativeModel({ model: modelName });
-          
-          // Use the correct simplified structure for multimodal input
-          result = await model.generateContent([
-            prompt,
-            { inlineData: { data: dataStr, mimeType } }
-          ]);
-          
-          // If we reached here, it worked!
-          break;
-        } catch (err) {
-          console.warn(`Model ${modelName} failed:`, err.message);
-          lastError = err;
-          continue; // Try next model
+        for (const apiVersion of apiVersions) {
+          try {
+            console.log(`Trying Gemini model: ${modelName} (${apiVersion})...`);
+            model = genAI.getGenerativeModel({ model: modelName }, { apiVersion });
+            
+            result = await model.generateContent([
+              prompt,
+              { inlineData: { data: dataStr, mimeType } }
+            ]);
+            
+            // If we reached here, it worked!
+            console.log(`Successfully used model: ${modelName} (${apiVersion})`);
+            break;
+          } catch (err) {
+            console.warn(`Model ${modelName} (${apiVersion}) failed:`, err.message);
+            lastError = err;
+            continue; 
+          }
         }
+        if (result) break;
       }
 
       if (!result) {
