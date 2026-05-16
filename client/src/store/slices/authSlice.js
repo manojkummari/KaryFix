@@ -6,6 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 const initialState = {
   user: null,
+  token: null,
   isAuthenticated: false,
   isLoading: false,
   error: null,
@@ -183,6 +184,7 @@ const authSlice = createSlice({
     },
     resetAuth: (state) => {
       state.user = null;
+      state.token = null;
       state.isAuthenticated = false;
       state.error = null;
       state.message = null;
@@ -199,6 +201,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
+        state.token = action.payload.token;
         state.error = null;
       })
       .addCase(register.rejected, (state, action) => {
@@ -214,6 +217,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
+        state.token = action.payload.token;
         state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
@@ -228,11 +232,15 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
+        if (action.payload.token) {
+          state.token = action.payload.token;
+        }
       })
       .addCase(loadUser.rejected, (state) => {
         state.isLoading = false;
         state.isAuthenticated = false;
         state.user = null;
+        state.token = null;
       })
       // Logout
       .addCase(logout.pending, (state) => {
@@ -242,10 +250,15 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = false;
         state.user = null;
+        state.token = null;
         state.error = null;
       })
       .addCase(logout.rejected, (state) => {
         state.isLoading = false;
+        state.isAuthenticated = false;
+        state.user = null;
+        state.token = null;
+        state.error = null;
       })
       // Forgot password
       .addCase(forgotPassword.pending, (state) => {
@@ -270,6 +283,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
+        state.token = action.payload.token;
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;

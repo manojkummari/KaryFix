@@ -13,7 +13,7 @@ const sendTokenResponse = (user, statusCode, res) => {
       Date.now() + (process.env.JWT_COOKIE_EXPIRE || 7) * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === 'production' || req.secure || req.headers['x-forwarded-proto'] === 'https',
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
   };
 
@@ -131,10 +131,14 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 // @route   POST /api/auth/logout
 // @access  Private
 exports.logout = asyncHandler(async (req, res, next) => {
-  res.cookie('token', 'none', {
+  const options = {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
-  });
+    secure: process.env.NODE_ENV === 'production' || req.secure || req.headers['x-forwarded-proto'] === 'https',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+  };
+
+  res.cookie('token', 'none', options);
 
   res.status(200).json({
     success: true,

@@ -21,7 +21,7 @@ import materialsReducer from './slices/materialsSlice';
 const persistConfig = {
   key: 'karyfix-auth',
   storage,
-  whitelist: ['user', 'isAuthenticated'],
+  whitelist: ['user', 'isAuthenticated', 'token'],
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

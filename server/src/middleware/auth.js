@@ -6,9 +6,11 @@ const User = require('../models/User');
 exports.requireAuth = asyncHandler(async (req, res, next) => {
   let token;
 
-  // Check for token in cookies
+  // Check for token in cookies or Authorization header
   if (req.cookies.token) {
     token = req.cookies.token;
+  } else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
   }
 
   // Make sure token exists

@@ -13,6 +13,19 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
+    // Get token from localStorage (redux-persist saves it here)
+    const persistedState = localStorage.getItem('persist:karyfix-auth');
+    if (persistedState) {
+      try {
+        const auth = JSON.parse(persistedState);
+        const token = auth.token ? JSON.parse(auth.token) : null;
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      } catch (e) {
+        console.error('Error parsing persisted auth state', e);
+      }
+    }
     return config;
   },
   (error) => {
