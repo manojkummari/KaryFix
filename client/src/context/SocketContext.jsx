@@ -104,7 +104,7 @@ export const SocketProvider = ({ children }) => {
           console.error('Error tracking location:', error);
           setLocationError(error.message);
         },
-        { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+        { enableHighAccuracy: false, maximumAge: 60000, timeout: 15000 }
       );
       setWatchIdState(watchId);
       
