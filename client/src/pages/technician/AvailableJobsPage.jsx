@@ -109,7 +109,7 @@ const AvailableJobsPage = () => {
               <Button onClick={() => startLocationTracking(user?._id)} className="px-8 py-3 text-lg shadow-xl shadow-yellow-500/20">
                 Go Online (Live GPS)
               </Button>
-              <Button variant="outline" onClick={skipGPS} className="px-8 py-3 text-lg border-neutral-700">
+              <Button onClick={skipGPS} className="px-8 py-3 text-lg shadow-lg">
                 Use Profile Address
               </Button>
             </div>
@@ -124,7 +124,7 @@ const AvailableJobsPage = () => {
               <Button onClick={() => startLocationTracking(user?._id)} className="px-6">
                 Try GPS Again
               </Button>
-              <Button variant="outline" onClick={skipGPS} className="px-6 border-neutral-600 text-neutral-300 hover:bg-neutral-800">
+              <Button onClick={skipGPS} className="px-6 shadow-lg">
                 Skip & Use Profile Address
               </Button>
             </div>
