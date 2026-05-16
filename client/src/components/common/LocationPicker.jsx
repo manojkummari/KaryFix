@@ -143,6 +143,7 @@ const LocationPicker = ({ onLocationSelect, initialAddress = '' }) => {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && searchAddress()}
+            onBlur={searchAddress}
             className="w-full pl-10 pr-4 py-2.5 bg-neutral-800 text-neutral-100 border border-neutral-700 rounded-xl focus:outline-none focus:border-yellow-500/50 transition-all text-sm"
           />
         </div>

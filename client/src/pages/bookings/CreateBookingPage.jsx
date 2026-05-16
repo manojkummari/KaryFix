@@ -223,45 +223,50 @@ const CreateBookingPage = () => {
     dispatch(createBooking(bookingData))
       .unwrap()
       .then((payload) => {
-        if (formData.paymentMethod === 'online' && payload.razorpayOrder) {
-          const options = {
-            key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_SphwSJWJgkm37s',
-            amount: payload.razorpayOrder.amount,
-            currency: 'INR',
-            name: 'KaryFix',
-            description: 'Service Booking Payment',
-            order_id: payload.razorpayOrder.id,
-            handler: async function (response) {
-              try {
-                await dispatch(verifyPayment({
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_signature: response.razorpay_signature,
-                  bookingId: payload.data._id
-                })).unwrap();
-              } catch (err) {
-                toast.error('Payment verification failed');
+        if (formData.paymentMethod === 'online') {
+           if (payload.razorpayOrder) {
+            const options = {
+              key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_SphwSJWJgkm37s',
+              amount: payload.razorpayOrder.amount,
+              currency: 'INR',
+              name: 'KaryFix',
+              description: 'Service Booking Payment',
+              order_id: payload.razorpayOrder.id,
+              handler: async function (response) {
+                try {
+                  await dispatch(verifyPayment({
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature,
+                    bookingId: payload.data._id
+                  })).unwrap();
+                } catch (err) {
+                  toast.error('Payment verification failed');
+                }
+              },
+              prefill: {
+                name: user?.name || '',
+                email: user?.email || '',
+                contact: user?.phone || ''
+              },
+              theme: {
+                color: '#EAB308' // yellow-500
               }
-            },
-            prefill: {
-              name: user?.name || '',
-              email: user?.email || '',
-              contact: user?.phone || ''
-            },
-            theme: {
-              color: '#EAB308' // yellow-500
-            }
-          };
+            };
 
-          const rzp = new window.Razorpay(options);
-          rzp.on('payment.failed', function (response) {
-            toast.error(response.error.description);
-          });
-          rzp.open();
+            const rzp = new window.Razorpay(options);
+            rzp.on('payment.failed', function (response) {
+              toast.error(response.error.description);
+            });
+            rzp.open();
+          } else {
+            toast.error('Failed to initialize payment gateway. Please contact support.');
+          }
         }
       })
       .catch((err) => {
         console.error('Booking failed:', err);
+        toast.error(err || 'Failed to create booking');
       });
   };
 

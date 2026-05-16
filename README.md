@@ -112,6 +112,7 @@ npx vercel
 | Variable | Description |
 |---|---|
 | `VITE_API_URL` | Backend Vercel URL (e.g. `https://karyfix-server.vercel.app`) |
+| `VITE_RAZORPAY_KEY_ID` | Razorpay Key ID for payments |
 
 ---
 

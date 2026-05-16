@@ -47,6 +47,7 @@ const ProfilePage = () => {
 
   const [showAddMoneyModal, setShowAddMoneyModal] = useState(false);
   const [addAmount, setAddAmount] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Load Razorpay Script
   useEffect(() => {
@@ -125,8 +126,13 @@ const ProfilePage = () => {
       return;
     }
 
+    setIsProcessing(true);
     try {
       const order = await dispatch(createAddMoneyOrder(addAmount)).unwrap();
+      
+      if (!order || !order.id) {
+        throw new Error('Failed to create payment order');
+      }
       
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_SphwSJWJgkm37s',
@@ -166,7 +172,11 @@ const ProfilePage = () => {
       });
       rzp.open();
     } catch (err) {
-      setError('Failed to initiate payment');
+      console.error('Wallet Error:', err);
+      setError(err.message || 'Failed to initiate payment');
+      toast.error(err.message || 'Failed to initiate payment');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -352,22 +362,26 @@ const ProfilePage = () => {
                 <div className="mt-8">
                   <h4 className="text-sm font-bold text-neutral-400 uppercase tracking-wider mb-4">Recent Transactions</h4>
                   <div className="space-y-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
-                    {user.wallet.transactions.slice().reverse().map((tx, idx) => (
-                      <div key={idx} className="flex justify-between items-center p-3 rounded-xl bg-neutral-800/40 border border-neutral-700/30">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${tx.type === 'credit' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
-                            {tx.type === 'credit' ? '+' : '-'}
+                    {user.wallet.transactions.length > 0 ? (
+                      user.wallet.transactions.slice().reverse().map((tx, idx) => (
+                        <div key={idx} className="flex justify-between items-center p-3 rounded-xl bg-neutral-800/40 border border-neutral-700/30">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${tx.type === 'credit' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+                              {tx.type === 'credit' ? '+' : '-'}
+                            </div>
+                            <div>
+                              <p className="text-white text-sm font-medium">{tx.description || (tx.type === 'credit' ? 'Funds Added' : 'Withdrawal')}</p>
+                              <p className="text-neutral-500 text-xs">{new Date(tx.date).toLocaleDateString()}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-white text-sm font-medium">{tx.description || (tx.type === 'credit' ? 'Funds Added' : 'Withdrawal')}</p>
-                            <p className="text-neutral-500 text-xs">{new Date(tx.date).toLocaleDateString()}</p>
-                          </div>
+                          <span className={`text-sm font-bold ${tx.type === 'credit' ? 'text-green-500' : 'text-red-500'}`}>
+                            {tx.type === 'credit' ? '+' : '-'}₹{tx.amount}
+                          </span>
                         </div>
-                        <span className={`text-sm font-bold ${tx.type === 'credit' ? 'text-green-500' : 'text-red-500'}`}>
-                          {tx.type === 'credit' ? '+' : '-'}₹{tx.amount}
-                        </span>
-                      </div>
-                    ))}
+                      ))
+                    ) : (
+                      <p className="text-center py-4 text-neutral-500 text-sm italic">No recent transactions found</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -397,8 +411,15 @@ const ProfilePage = () => {
                 />
               </FormGroup>
               <div className="mt-6 flex gap-3">
-                <Button variant="outline" className="flex-1" onClick={() => setShowAddMoneyModal(false)}>Cancel</Button>
-                <Button className="flex-1 bg-green-500 hover:bg-green-600 text-white" onClick={handleAddMoney}>Proceed to Pay</Button>
+                <Button variant="outline" className="flex-1" onClick={() => setShowAddMoneyModal(false)} disabled={isProcessing}>Cancel</Button>
+                <Button 
+                  className="flex-1 bg-green-500 hover:bg-green-600 text-white" 
+                  onClick={handleAddMoney}
+                  loading={isProcessing}
+                  disabled={isProcessing}
+                >
+                  Proceed to Pay
+                </Button>
               </div>
             </div>
           </div>
