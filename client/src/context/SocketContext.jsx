@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { updateBookingStatusRealtime } from '../store/slices/bookingSlice';
+import api from '../services/api';
 
 const SocketContext = createContext(null);
 
@@ -86,19 +87,17 @@ export const SocketProvider = ({ children }) => {
         (position) => {
           const { latitude, longitude } = position.coords;
           const coordinates = [longitude, latitude]; // GeoJSON format: [lng, lat]
-          if (socket) {
-            socket.emit('technician-location-update', { technicianId, coordinates }, (response) => {
-               if (response && response.success) {
-                  setLocationAcquired(true);
-                  setLocationError(null);
-               } else {
-                  console.error('Failed to save location to DB');
-                  setLocationError('Failed to save location on server');
-               }
-            });
-          } else {
-            setLocationAcquired(true);
-            setLocationError(null);
+          // Set location as acquired as soon as we get coordinates
+          setLocationAcquired(true);
+          setLocationError(null);
+
+          // Update location via REST API (works on Vercel)
+          api.post('/tracking/update-location', { technicianId, coordinates })
+            .catch(err => console.error('REST location update failed:', err));
+
+          // Also try via Socket.io if connected
+          if (socket && socket.connected) {
+            socket.emit('technician-location-update', { technicianId, coordinates });
           }
         },
         (error) => {
