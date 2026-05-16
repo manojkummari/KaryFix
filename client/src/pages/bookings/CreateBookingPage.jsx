@@ -171,6 +171,15 @@ const CreateBookingPage = () => {
       const apiVersions = ['v1', 'v1beta'];
       let lastError = null;
 
+      // Debug: Attempt to list models to see what this key can do
+      try {
+        const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyABs43BaRzA69IAVFie1aiuckOCt8kX_EM';
+        fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`)
+          .then(res => res.json())
+          .then(data => console.log("DEBUG: Available models for this key:", data))
+          .catch(err => console.error("DEBUG: Failed to list models:", err));
+      } catch (e) {}
+
       const prompt = "You are a professional repair technician assistant. Analyze this image of a damaged product, device, or problem. Identify the object and the visible damage or issue. Provide a concise, clear, and professional problem description (under 3 sentences) that a technician can use to understand what needs to be fixed. Do not use conversational filler, just provide the description.";
 
       for (const modelName of modelsToTry) {
