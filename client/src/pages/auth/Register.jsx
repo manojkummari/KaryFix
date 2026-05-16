@@ -167,7 +167,7 @@ const Register = () => {
             </div>
 
             {/* Role Selection */}
-            <div className="grid grid-cols-2 gap-4 my-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
               <label 
                 className={`cursor-pointer border rounded-xl p-4 flex flex-col items-center justify-center transition-all ${role === ROLES.CUSTOMER ? 'border-yellow-500 bg-yellow-500/10 text-white' : 'border-neutral-700 bg-neutral-800 text-neutral-400 hover:border-neutral-500'}`}
               >

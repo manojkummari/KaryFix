@@ -21,11 +21,14 @@ import {
   FaTools,
   FaTruck,
   FaHome,
-  FaGraduationCap
+  FaGraduationCap,
+  FaBars,
+  FaTimes
 } from 'react-icons/fa';
 
 const LandingPage = () => {
   const [openFaq, setOpenFaq] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -53,8 +56,30 @@ const LandingPage = () => {
                 </Link>
               </div>
             </div>
+            {/* Mobile menu button */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-neutral-400 hover:text-white focus:outline-none"
+              >
+                {mobileMenuOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
+              </button>
+            </div>
           </div>
         </div>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-neutral-900 border-b border-white/10 px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block hover:bg-neutral-800 hover:text-yellow-400 text-base font-medium transition-colors px-3 py-2 rounded-md">About</a>
+            <a href="#services" onClick={() => setMobileMenuOpen(false)} className="block hover:bg-neutral-800 hover:text-yellow-400 text-base font-medium transition-colors px-3 py-2 rounded-md">Services</a>
+            <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="block hover:bg-neutral-800 hover:text-yellow-400 text-base font-medium transition-colors px-3 py-2 rounded-md">How it Works</a>
+            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="block hover:bg-neutral-800 hover:text-yellow-400 text-base font-medium transition-colors px-3 py-2 rounded-md">FAQ</a>
+            <Link to="/login" className="block text-center mt-4 bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded-md text-base font-bold transition-transform">
+              Login / Register
+            </Link>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -63,15 +88,15 @@ const LandingPage = () => {
           <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-yellow-500/30 bg-yellow-500/10 text-yellow-400 text-sm font-semibold tracking-wide">
             🚀 Revolutionizing Service Delivery in India
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
             Your All-in-One Solution for <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">Daily Life Hassles</span>
           </h1>
-          <p className="mt-4 max-w-3xl mx-auto text-xl text-neutral-400 leading-relaxed">
+          <p className="mt-4 max-w-3xl mx-auto text-lg sm:text-xl text-neutral-400 leading-relaxed">
             From <strong>Electronics Repair</strong> to <strong>Waste Management</strong>, we bridge the gap between reliable technicians and your doorstep. 
             Experience convenience, speed, and premium quality with KaryFix.
           </p>
-          <div className="mt-10 flex justify-center gap-4 flex-wrap">
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4 flex-wrap">
             <Link to="/register" className="px-8 py-4 bg-yellow-500 text-black font-bold rounded-full text-lg hover:bg-yellow-400 transition-all shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] flex items-center gap-2">
               Book a Service <FaArrowRight />
             </Link>
@@ -91,7 +116,7 @@ const LandingPage = () => {
        {/* Stats Section */}
        <div className="py-10 bg-neutral-800/30 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-yellow-500 mb-1">11+</div>
               <div className="text-sm text-neutral-400 uppercase tracking-widest">Service Categories</div>
@@ -138,7 +163,7 @@ const LandingPage = () => {
                 ))}
               </ul>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-neutral-800 p-6 rounded-2xl transform translate-y-8 border border-white/5 hover:border-yellow-500/30 transition-all">
                 <FaUserCog className="text-4xl text-yellow-500 mb-4" />
                 <h3 className="font-bold text-lg">Skilled Pros</h3>
@@ -172,7 +197,7 @@ const LandingPage = () => {
             <p className="text-neutral-400 max-w-xl mx-auto">Get your tasks done in three simple steps. We make it effortless.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* Connecting Line for Desktop */}
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-yellow-500/20 -z-10"></div>
 
@@ -211,7 +236,7 @@ const LandingPage = () => {
             <p className="text-neutral-400 max-w-2xl mx-auto">We cover everything from your kitchen to your driveway.</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Category 1 */}
             <div className="bg-neutral-800/40 rounded-xl p-6 border border-white/5 hover:border-yellow-500/50 transition-all hover:bg-neutral-800/60 group">
               <div className="flex items-center mb-6">
@@ -351,7 +376,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to experience the future of service?</h2>
           <p className="text-neutral-400 mb-10 max-w-xl mx-auto">Join thousands of satisfied customers and skilled professionals on KaryFix today.</p>
-           <Link to="/register" className="px-10 py-4 bg-white text-black font-bold rounded-full text-lg hover:bg-gray-200 transition-all flex items-center gap-2 mx-auto w-fit">
+           <Link to="/register" className="px-10 py-4 bg-white text-black font-bold rounded-full text-lg hover:bg-gray-200 transition-all flex items-center justify-center gap-2 mx-auto w-full sm:w-fit">
               Join KaryFix Now <FaArrowRight />
             </Link>
             

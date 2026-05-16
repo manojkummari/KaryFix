@@ -1,7 +1,7 @@
 const Card = ({ children, title, className = '', ...props }) => {
   return (
     <div
-      className={`bg-neutral-800/60 backdrop-blur-xl rounded-lg shadow-xl shadow-black/30 border border-neutral-700/50 overflow-hidden ${className}`}
+      className={`bg-neutral-800/60 backdrop-blur-xl rounded-lg shadow-xl shadow-black/30 border border-neutral-700/50 overflow-hidden flex flex-col ${className}`}
       {...props}
     >
       {title && (
@@ -9,7 +9,7 @@ const Card = ({ children, title, className = '', ...props }) => {
           <h3 className="text-lg font-semibold text-yellow-500">{title}</h3>
         </div>
       )}
-      <div className="p-6">{children}</div>
+      <div className="p-6 flex-1">{children}</div>
     </div>
   );
 };

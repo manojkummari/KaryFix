@@ -188,7 +188,7 @@ const ProfilePage = () => {
         {/* Header Profile Banner */}
         <div className="relative mb-8 rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-700/50">
           <div className="h-32 bg-gradient-to-r from-yellow-500/20 via-orange-500/10 to-neutral-900"></div>
-          <div className="px-8 pb-8 flex flex-col md:flex-row items-end -mt-12 gap-6">
+          <div className="px-8 pb-8 flex flex-col md:flex-row items-center md:items-end -mt-12 gap-6">
             <div className="relative">
               <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-neutral-800 to-neutral-900 border-4 border-neutral-900 flex items-center justify-center shadow-2xl">
                 <span className="text-4xl font-bold text-yellow-500">{user?.name?.charAt(0).toUpperCase()}</span>
@@ -197,9 +197,9 @@ const ProfilePage = () => {
                 <FaCamera className="text-sm" />
               </button>
             </div>
-            <div className="flex-1 mb-2">
+            <div className="flex-1 mb-2 text-center md:text-left">
               <h1 className="text-2xl font-bold text-white mb-1">{user?.name}</h1>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col md:flex-row items-center gap-2">
                 <span className="text-neutral-400 text-sm flex items-center gap-1"><FaEnvelope className="text-xs" /> {user?.email}</span>
                 <span className="w-1 h-1 bg-neutral-600 rounded-full"></span>
                 <span className="px-2 py-0.5 rounded-md bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-bold uppercase">
@@ -230,7 +230,7 @@ const ProfilePage = () => {
               </h3>
 
               <form onSubmit={handleUpdateProfile}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <FormGroup label="Full Name" icon={FaUser}>
                     <StyledInput
                       name="name"
@@ -291,7 +291,7 @@ const ProfilePage = () => {
                     />
                   </FormGroup>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormGroup label="New Password">
                       <StyledInput
                         type="password"

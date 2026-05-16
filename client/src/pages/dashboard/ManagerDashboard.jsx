@@ -7,36 +7,36 @@ const ManagerDashboard = () => {
 
   return (
     <DashboardLayout title="Category Manager Dashboard" menuItems={menuItems}>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card title="Pending Approvals">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card title="Pending Approvals" className="h-full">
           <div className="text-3xl font-bold text-orange-400">0</div>
           <p className="text-sm text-neutral-400 mt-2">Technicians to Verify</p>
         </Card>
 
-        <Card title="Active Technicians">
+        <Card title="Active Technicians" className="h-full">
           <div className="text-3xl font-bold text-yellow-500">0</div>
           <p className="text-sm text-neutral-400 mt-2">Verified & Active</p>
         </Card>
 
-        <Card title="Active Bookings">
+        <Card title="Active Bookings" className="h-full">
           <div className="text-3xl font-bold text-yellow-500">0</div>
           <p className="text-sm text-neutral-400 mt-2">In Progress</p>
         </Card>
 
-        <Card title="Completed Today">
+        <Card title="Completed Today" className="h-full">
           <div className="text-3xl font-bold text-purple-400">0</div>
           <p className="text-sm text-neutral-400 mt-2">Services Completed</p>
         </Card>
       </div>
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card title="Technician Verification Queue">
+        <Card title="Technician Verification Queue" className="h-full">
           <p className="text-neutral-400 text-center py-8">
             No pending technician applications
           </p>
         </Card>
 
-        <Card title="Service Assignments">
+        <Card title="Service Assignments" className="h-full">
           <p className="text-neutral-400 text-center py-8">
             No unassigned service requests
           </p>

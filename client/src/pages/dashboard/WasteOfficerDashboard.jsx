@@ -111,7 +111,7 @@ const WasteOfficerDashboard = () => {
         {statCards.map((stat, index) => (
           <div
             key={index}
-            className={`relative p-6 rounded-2xl bg-gradient-to-br ${stat.color} border ${stat.borderColor} backdrop-blur-sm overflow-hidden group hover:scale-105 transition-transform duration-300`}
+            className={`relative p-6 rounded-2xl bg-gradient-to-br ${stat.color} border ${stat.borderColor} backdrop-blur-sm overflow-hidden group hover:scale-105 transition-transform duration-300 flex flex-col h-full justify-between`}
           >
             <div className="absolute top-4 right-4 text-3xl opacity-20 group-hover:opacity-40 transition-opacity">
               {stat.icon}
@@ -238,7 +238,7 @@ const WasteOfficerDashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <Link
           to="/waste/pickups"
           className="p-6 rounded-2xl bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 hover:border-orange-500/40 transition-all group"

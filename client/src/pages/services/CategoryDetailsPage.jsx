@@ -107,7 +107,7 @@ const CategoryDetailsPage = () => {
                       <FaStar className="text-yellow-500" />
                       <h4 className="text-lg font-semibold text-white">Popular Services</h4>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                       {subServices
                         .filter((s) => s.popular)
                         .map((subService) => (
@@ -125,7 +125,7 @@ const CategoryDetailsPage = () => {
                   <h4 className="text-lg font-semibold text-white mb-4">
                     All Services
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                     {subServices.map((subService) => (
                       <SubServiceCard
                         key={subService._id}

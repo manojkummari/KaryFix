@@ -432,7 +432,7 @@ const CreateBookingPage = () => {
                 <p className="text-neutral-500 text-sm">Optional - leave empty for ASAP</p>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-neutral-400 text-sm mb-2">Date</label>
                 <input
@@ -547,7 +547,7 @@ const CreateBookingPage = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <label
                 className={`relative flex flex-col p-4 rounded-xl cursor-pointer border-2 transition-all duration-200 ${formData.paymentMethod === 'cash'
                   ? 'border-yellow-500 bg-yellow-500/10'

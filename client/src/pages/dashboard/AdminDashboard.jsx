@@ -6,7 +6,7 @@ import { FaUsers, FaUserShield, FaCalendarCheck, FaRupeeSign, FaChartLine, FaArr
 import api from '../../services/api';
 
 const StatCard = ({ title, value, label, icon: Icon, trend, color, gradient, isLoading }) => (
-  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group`}>
+  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group h-full flex flex-col justify-between`}>
     <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-300`}>
       <Icon className="text-8xl" />
     </div>
@@ -130,7 +130,7 @@ const AdminDashboard = () => {
       )}
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard 
           title="Total Users" 
           value={stats?.users?.total || 0} 
@@ -181,7 +181,7 @@ const AdminDashboard = () => {
               </h3>
             </div>
             {/* Stats Summary */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
               <div className="p-4 bg-neutral-800/50 rounded-xl text-center">
                 <p className="text-2xl font-bold text-yellow-400">{stats?.services?.categories || 0}</p>
                 <p className="text-xs text-neutral-500">Categories</p>
@@ -200,7 +200,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             {/* Quick Actions */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button 
                 onClick={() => navigate('/admin/services')}
                 className="p-4 bg-neutral-800/50 hover:bg-neutral-700/50 rounded-xl text-left transition-colors group"

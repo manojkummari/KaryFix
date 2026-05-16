@@ -167,7 +167,7 @@ const BookingTrackingPage = () => {
               <BookingStatusBadge status={selectedBooking.status} />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-neutral-700/50">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-neutral-700/50">
               <div>
                 <p className="text-neutral-500 text-sm mb-1">Booking ID</p>
                 <p className="text-neutral-300 font-mono text-sm">
@@ -199,7 +199,7 @@ const BookingTrackingPage = () => {
              </div>
              
              <div className="space-y-6">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Left Column: Text Details */}
                   <div className="space-y-4">
                      <div>
@@ -267,7 +267,7 @@ const BookingTrackingPage = () => {
               </div>
               <h3 className="text-lg font-semibold text-white">Contact Information</h3>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Customer */}
               <div className="p-4 bg-neutral-800/50 rounded-xl">
                 <p className="text-neutral-500 text-sm mb-3">Customer</p>
@@ -312,7 +312,7 @@ const BookingTrackingPage = () => {
                 </div>
                 <h3 className="text-lg font-semibold text-white">Photos</h3>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {selectedBooking.photos.map((photo, index) => (
                   <div
                     key={index}

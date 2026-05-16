@@ -10,7 +10,7 @@ import { FaRupeeSign, FaCalendarAlt, FaChartLine, FaWallet, FaUniversity, FaHist
 
 // Reusable StatCard Component
 const StatCard = ({ title, value, label, icon: Icon, color, gradient, isLoading }) => (
-  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group`}>
+  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group h-full flex flex-col justify-between`}>
     <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-300`}>
       <Icon className="text-8xl" />
     </div>

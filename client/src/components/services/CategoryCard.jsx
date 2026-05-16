@@ -11,7 +11,7 @@ const CategoryCard = ({ category }) => {
   return (
     <div
       onClick={handleClick}
-      className="bg-neutral-800/60 backdrop-blur-xl border border-neutral-700/50 rounded-lg p-6 cursor-pointer transition-all duration-200 hover:shadow-2xl hover:shadow-yellow-500/20 hover:border-yellow-500/50 group"
+      className="bg-neutral-800/60 backdrop-blur-xl border border-neutral-700/50 rounded-lg p-6 cursor-pointer transition-all duration-200 hover:shadow-2xl hover:shadow-yellow-500/20 hover:border-yellow-500/50 group flex flex-col h-full"
     >
       {category.image && (
         <div className="mb-4 rounded-lg overflow-hidden h-40 bg-neutral-900">
@@ -36,7 +36,7 @@ const CategoryCard = ({ category }) => {
         {category.description}
       </p>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-auto">
         <span className="text-xs text-neutral-400">
           {category.subservices?.length || 0} services available
         </span>

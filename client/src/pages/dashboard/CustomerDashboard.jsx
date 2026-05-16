@@ -12,7 +12,7 @@ import { getMenuItemsByRole } from '../../utils/menuItems';
 import { FaWallet, FaClipboardList, FaCheckCircle, FaArrowRight, FaSearch, FaCalendarAlt } from 'react-icons/fa';
 
 const StatCard = ({ title, value, subtitle, icon: Icon, color, gradient }) => (
-  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group`}>
+  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group h-full flex flex-col justify-between`}>
     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-300">
       <Icon className="text-7xl" />
     </div>
@@ -70,7 +70,7 @@ const CustomerDashboard = () => {
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <StatCard 
           title="Wallet Balance"
           value={`₹${user?.wallet?.balance || 0}`}
@@ -146,13 +146,13 @@ const CustomerDashboard = () => {
             <Loader />
           </div>
         ) : featuredCategories.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {featuredCategories.map((category) => (
               <CategoryCard key={category._id} category={category} />
             ))}
           </div>
         ) : categories.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {categories.slice(0, 4).map((category) => (
               <CategoryCard key={category._id} category={category} />
             ))}
@@ -180,7 +180,7 @@ const CustomerDashboard = () => {
             <Loader />
           </div>
         ) : bookings.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {bookings.slice(0, 3).map((booking) => (
               <BookingCard key={booking._id} booking={booking} />
             ))}

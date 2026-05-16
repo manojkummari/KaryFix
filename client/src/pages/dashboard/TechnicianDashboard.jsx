@@ -21,7 +21,7 @@ import {
 
 // Reusable StatCard Component (Local for now to match AdminDashboard style)
 const StatCard = ({ title, value, label, icon: Icon, color, gradient, isLoading }) => (
-  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group`}>
+  <div className={`p-6 rounded-2xl border border-neutral-700/50 bg-gradient-to-br ${gradient} backdrop-blur-sm hover:translate-y-[-2px] transition-transform duration-300 relative overflow-hidden group h-full flex flex-col justify-between`}>
     <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-300`}>
       <Icon className="text-8xl" />
     </div>
@@ -137,7 +137,7 @@ const TechnicianDashboard = () => {
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard 
           title="Total Earnings" 
           value={`₹${totalEarnings}`}
@@ -228,7 +228,7 @@ const TechnicianDashboard = () => {
                  <Loader />
                </div>
             ) : availableBookings?.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {availableBookings.slice(0, 4).map((booking) => (
                   <div key={booking._id} className="relative group">
                      <BookingCard booking={booking} compact />
