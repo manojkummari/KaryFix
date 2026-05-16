@@ -34,7 +34,6 @@ const TechnicianEarningsPage = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { bookings, isLoading } = useSelector((state) => state.bookings);
-  console.log("DEBUG: All Technician Bookings:", bookings);
   const navigate = useNavigate();
 
   const [showBankModal, setShowBankModal] = useState(false);
@@ -45,10 +44,12 @@ const TechnicianEarningsPage = () => {
     accountNumber: user?.bankDetails?.accountNumber || '',
     ifscCode: user?.bankDetails?.ifscCode || '',
   });
+  /* Temporarily disabled to debug loading issue
   useEffect(() => {
     dispatch(getMyBookings({ limit: 50 }));
     dispatch(loadUser());
   }, [dispatch]);
+  */
 
   const handleBankSubmit = async () => {
     try {
@@ -224,7 +225,7 @@ const TechnicianEarningsPage = () => {
                     })
                   ) : (
                     <tr>
-                      <td colSpan="5" className="py-12 text-center text-neutral-500">
+                      <td colSpan="6" className="py-12 text-center text-neutral-500">
                         No completed jobs found yet.
                       </td>
                     </tr>
