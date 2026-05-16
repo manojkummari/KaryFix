@@ -164,13 +164,18 @@ const CreateBookingPage = () => {
       }
 
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyDZnavm0Ar9pDHUAhioUtga-Oj0D61hwRY');
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
       const prompt = "You are a professional repair technician assistant. Analyze this image of a damaged product, device, or problem. Identify the object and the visible damage or issue. Provide a concise, clear, and professional problem description (under 3 sentences) that a technician can use to understand what needs to be fixed. Do not use conversational filler, just provide the description.";
 
       const result = await model.generateContent([
-        prompt,
-        { inlineData: { data: dataStr, mimeType } }
+        {
+          inlineData: {
+            data: dataStr,
+            mimeType: mimeType
+          }
+        },
+        { text: prompt }
       ]);
       const text = await result.response.text();
 
@@ -181,8 +186,9 @@ const CreateBookingPage = () => {
 
       toast.success('Description autofilled!', { id: toastId });
     } catch (error) {
-      console.error(error);
-      toast.error('Failed to analyze image', { id: toastId });
+      console.error('Gemini AI Error:', error);
+      const errorMessage = error.message || 'Unknown error';
+      toast.error(`AI Analysis failed: ${errorMessage}`, { id: toastId });
     } finally {
       setIsAnalyzingLocal(false);
       // Reset input so the same file can be selected again
