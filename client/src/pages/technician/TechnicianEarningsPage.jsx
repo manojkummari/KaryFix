@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateBankDetails, withdrawFunds } from '../../store/slices/authSlice';
+import { updateBankDetails, withdrawFunds, loadUser } from '../../store/slices/authSlice';
+import { getMyBookings } from '../../store/slices/bookingSlice';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
@@ -43,6 +44,10 @@ const TechnicianEarningsPage = () => {
     accountNumber: user?.bankDetails?.accountNumber || '',
     ifscCode: user?.bankDetails?.ifscCode || '',
   });
+  useEffect(() => {
+    dispatch(getMyBookings({ limit: 50 }));
+    dispatch(loadUser());
+  }, [dispatch]);
 
   const handleBankSubmit = async () => {
     try {
