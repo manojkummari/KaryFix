@@ -163,8 +163,8 @@ const CreateBookingPage = () => {
         dataStr = parts[1].split(',')[1];
       }
 
-      const genAI = new GoogleGenerativeAI('AIzaSyDZnavm0Ar9pDHUAhioUtga-Oj0D61hwRY');
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+      const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyDZnavm0Ar9pDHUAhioUtga-Oj0D61hwRY');
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
       const prompt = "You are a professional repair technician assistant. Analyze this image of a damaged product, device, or problem. Identify the object and the visible damage or issue. Provide a concise, clear, and professional problem description (under 3 sentences) that a technician can use to understand what needs to be fixed. Do not use conversational filler, just provide the description.";
 
