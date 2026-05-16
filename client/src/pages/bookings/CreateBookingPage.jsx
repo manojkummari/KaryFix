@@ -170,19 +170,19 @@ const CreateBookingPage = () => {
       const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro-vision'];
       let lastError = null;
 
+      const prompt = "You are a professional repair technician assistant. Analyze this image of a damaged product, device, or problem. Identify the object and the visible damage or issue. Provide a concise, clear, and professional problem description (under 3 sentences) that a technician can use to understand what needs to be fixed. Do not use conversational filler, just provide the description.";
+
       for (const modelName of modelsToTry) {
         try {
           console.log(`Trying Gemini model: ${modelName}...`);
           model = genAI.getGenerativeModel({ model: modelName });
+          
+          // Use the correct simplified structure for multimodal input
           result = await model.generateContent([
-            {
-              inlineData: {
-                data: dataStr,
-                mimeType: mimeType
-              }
-            },
-            { text: prompt }
+            prompt,
+            { inlineData: { data: dataStr, mimeType } }
           ]);
+          
           // If we reached here, it worked!
           break;
         } catch (err) {
