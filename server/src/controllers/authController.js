@@ -4,7 +4,7 @@ const User = require('../models/User');
 const TechnicianProfile = require('../models/TechnicianProfile');
 
 // Helper function to send token response
-const sendTokenResponse = (user, statusCode, res) => {
+const sendTokenResponse = (user, statusCode, req, res) => {
   // Create token
   const token = user.getSignedJwtToken();
 
@@ -66,7 +66,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     });
   }
 
-  sendTokenResponse(user, 201, res);
+  sendTokenResponse(user, 201, req, res);
 });
 
 // @desc    Login user
@@ -112,7 +112,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     });
   }
 
-  sendTokenResponse(user, 200, res);
+  sendTokenResponse(user, 200, req, res);
 });
 
 // @desc    Get current logged in user
@@ -231,7 +231,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   user.resetPasswordExpire = undefined;
   await user.save();
 
-  sendTokenResponse(user, 200, res);
+  sendTokenResponse(user, 200, req, res);
 });
 
 // @desc    Update user details
@@ -294,5 +294,5 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   user.password = newPassword;
   await user.save();
 
-  sendTokenResponse(user, 200, res);
+  sendTokenResponse(user, 200, req, res);
 });
