@@ -104,10 +104,15 @@ const AvailableJobsPage = () => {
               <FaMapMarkerAlt className="text-4xl text-neutral-500" />
             </div>
             <h3 className="text-2xl font-bold text-white mb-3">You are currently Offline</h3>
-            <p className="text-neutral-400 mb-8 max-w-md">Go online to share your live location and start receiving job requests from customers within your 60 KM radius.</p>
-            <Button onClick={() => startLocationTracking(user?._id)} className="px-8 py-3 text-lg shadow-xl shadow-yellow-500/20 animate-pulse hover:animate-none">
-              Go Online & Find Jobs
-            </Button>
+            <p className="text-neutral-400 mb-8 max-w-md">Go online to start receiving job requests from customers within your 60 KM radius. Choose Live GPS for tracking or use your fixed profile address.</p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button onClick={() => startLocationTracking(user?._id)} className="px-8 py-3 text-lg shadow-xl shadow-yellow-500/20">
+                Go Online (Live GPS)
+              </Button>
+              <Button variant="outline" onClick={skipGPS} className="px-8 py-3 text-lg border-neutral-700">
+                Use Profile Address
+              </Button>
+            </div>
           </div>
         ) : locationError ? (
           <div className="flex flex-col items-center justify-center py-20 text-center bg-neutral-900/20 rounded-2xl border border-red-500/30 border-dashed">
