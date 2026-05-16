@@ -34,6 +34,7 @@ const TechnicianEarningsPage = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { bookings, isLoading } = useSelector((state) => state.bookings);
+  console.log("DEBUG: All Technician Bookings:", bookings);
   const navigate = useNavigate();
 
   const [showBankModal, setShowBankModal] = useState(false);
@@ -83,7 +84,7 @@ const TechnicianEarningsPage = () => {
     }
   };
 
-  const completedJobs = bookings.filter((b) => b.status === 'completed');
+  const completedJobs = bookings.filter((b) => ['completed', 'verification_pending'].includes(b.status));
   const activeJobsCount = bookings.filter((b) =>
     ['assigned', 'accepted', 'on-the-way', 'in-progress'].includes(b.status)
   ).length;
@@ -180,6 +181,7 @@ const TechnicianEarningsPage = () => {
                     <th className="py-4 px-4 text-xs font-bold text-neutral-400 uppercase tracking-wider">Date</th>
                     <th className="py-4 px-4 text-xs font-bold text-neutral-400 uppercase tracking-wider">Service</th>
                     <th className="py-4 px-4 text-xs font-bold text-neutral-400 uppercase tracking-wider">Customer</th>
+                    <th className="py-4 px-4 text-xs font-bold text-neutral-400 uppercase tracking-wider">Status</th>
                     <th className="py-4 px-4 text-xs font-bold text-neutral-400 uppercase tracking-wider text-right">Amount</th>
                     <th className="py-4 px-4 text-xs font-bold text-neutral-400 uppercase tracking-wider text-right">Net Earning</th>
                   </tr>
@@ -201,6 +203,15 @@ const TechnicianEarningsPage = () => {
                           </td>
                           <td className="py-4 px-4 text-sm text-neutral-400">
                             {booking.customerId?.name || 'N/A'}
+                          </td>
+                          <td className="py-4 px-4 text-sm">
+                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                              booking.status === 'completed' 
+                                ? 'bg-green-500/10 text-green-500 border border-green-500/20' 
+                                : 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20'
+                            }`}>
+                              {booking.status === 'completed' ? 'Settled' : 'Pending Verification'}
+                            </span>
                           </td>
                           <td className="py-4 px-4 text-sm text-right text-neutral-300">
                             ₹{amount}
