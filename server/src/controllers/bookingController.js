@@ -849,6 +849,9 @@ exports.getAvailableBookings = async (req, res) => {
     let technicianCoords = null;
     if (profile && profile.currentLocation && profile.currentLocation.coordinates.length === 2 && profile.currentLocation.coordinates[0] !== 0) {
       technicianCoords = profile.currentLocation.coordinates;
+    } else if (profile && profile.location && profile.location.coordinates.length === 2 && profile.location.coordinates[0] !== 0) {
+      // Fallback to registered base location
+      technicianCoords = profile.location.coordinates;
     }
 
     const skip = (parseInt(page) - 1) * parseInt(limit);

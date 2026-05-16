@@ -120,6 +120,11 @@ export const SocketProvider = ({ children }) => {
     return () => setIsTracking(false);
   };
 
+  const skipGPS = () => {
+    setLocationAcquired(true);
+    setLocationError(null);
+  };
+
   const stopLocationTracking = () => {
     if (watchIdState !== null && 'geolocation' in navigator) {
       navigator.geolocation.clearWatch(watchIdState);
@@ -136,6 +141,7 @@ export const SocketProvider = ({ children }) => {
     updateLocation,
     startLocationTracking,
     stopLocationTracking,
+    skipGPS,
     locationAcquired,
     locationError,
     isTracking,

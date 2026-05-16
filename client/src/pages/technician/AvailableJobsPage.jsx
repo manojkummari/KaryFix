@@ -14,7 +14,7 @@ const AvailableJobsPage = () => {
   const dispatch = useDispatch();
   const { availableBookings, isLoading } = useSelector((state) => state.bookings);
   const { user } = useSelector((state) => state.auth);
-  const { startLocationTracking, stopLocationTracking, isTracking, socket, locationAcquired, locationError } = useSocket();
+  const { startLocationTracking, stopLocationTracking, skipGPS, isTracking, socket, locationAcquired, locationError } = useSocket();
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
 
@@ -115,9 +115,14 @@ const AvailableJobsPage = () => {
             <p className="text-red-400 font-bold mb-2 text-xl">Location Access Required</p>
             <p className="text-neutral-400">{locationError}</p>
             <p className="text-neutral-500 text-sm mt-2 max-w-md">Please enable location permissions in your browser. We need your live location to find jobs within a 60 KM radius.</p>
-            <Button variant="outline" className="mt-6 border-red-500/50 text-red-400 hover:bg-red-500/10" onClick={() => startLocationTracking(user?._id)}>
-              Try Again
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <Button onClick={() => startLocationTracking(user?._id)} className="px-6">
+                Try GPS Again
+              </Button>
+              <Button variant="outline" onClick={skipGPS} className="px-6 border-neutral-600 text-neutral-300 hover:bg-neutral-800">
+                Skip & Use Profile Address
+              </Button>
+            </div>
           </div>
         ) : !locationAcquired ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
