@@ -121,6 +121,7 @@ export const SocketProvider = ({ children }) => {
   };
 
   const skipGPS = () => {
+    stopLocationTracking();
     setLocationAcquired(true);
     setLocationError(null);
   };
