@@ -164,19 +164,38 @@ const CreateBookingPage = () => {
       }
 
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyABs43BaRzA69IAVFie1aiuckOCt8kX_EM');
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      
+      let model;
+      let result;
+      const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro-vision'];
+      let lastError = null;
 
-      const prompt = "You are a professional repair technician assistant. Analyze this image of a damaged product, device, or problem. Identify the object and the visible damage or issue. Provide a concise, clear, and professional problem description (under 3 sentences) that a technician can use to understand what needs to be fixed. Do not use conversational filler, just provide the description.";
+      for (const modelName of modelsToTry) {
+        try {
+          console.log(`Trying Gemini model: ${modelName}...`);
+          model = genAI.getGenerativeModel({ model: modelName });
+          result = await model.generateContent([
+            {
+              inlineData: {
+                data: dataStr,
+                mimeType: mimeType
+              }
+            },
+            { text: prompt }
+          ]);
+          // If we reached here, it worked!
+          break;
+        } catch (err) {
+          console.warn(`Model ${modelName} failed:`, err.message);
+          lastError = err;
+          continue; // Try next model
+        }
+      }
 
-      const result = await model.generateContent([
-        {
-          inlineData: {
-            data: dataStr,
-            mimeType: mimeType
-          }
-        },
-        { text: prompt }
-      ]);
+      if (!result) {
+        throw lastError || new Error('All Gemini models failed');
+      }
+
       const text = await result.response.text();
 
       setFormData((prev) => ({
