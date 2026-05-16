@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from '../../services/authService';
-import axios from 'axios';
+import api from '../../services/api';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
@@ -124,7 +124,7 @@ export const createAddMoneyOrder = createAsyncThunk(
   'auth/createAddMoneyOrder',
   async (amount, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/wallet/add-money`, { amount }, { withCredentials: true });
+      const response = await api.post('/wallet/add-money', { amount });
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || { message: 'Failed to create order' });
@@ -137,7 +137,7 @@ export const verifyAddMoney = createAsyncThunk(
   'auth/verifyAddMoney',
   async (paymentData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/wallet/verify`, paymentData, { withCredentials: true });
+      const response = await api.post('/wallet/verify', paymentData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || { message: 'Failed to verify payment' });
@@ -150,7 +150,7 @@ export const updateBankDetails = createAsyncThunk(
   'auth/updateBankDetails',
   async (bankData, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${API_URL}/wallet/bank-details`, bankData, { withCredentials: true });
+      const response = await api.put('/wallet/bank-details', bankData);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || { message: 'Failed to update bank details' });
@@ -163,7 +163,7 @@ export const withdrawFunds = createAsyncThunk(
   'auth/withdrawFunds',
   async (amount, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/wallet/withdraw`, { amount }, { withCredentials: true });
+      const response = await api.post('/wallet/withdraw', { amount });
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || { message: 'Failed to withdraw funds' });
