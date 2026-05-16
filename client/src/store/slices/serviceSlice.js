@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../../services/api';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
@@ -14,9 +14,7 @@ export const getCategories = createAsyncThunk(
       if (featured !== undefined) queryParams.append('featured', featured);
       if (active !== undefined) queryParams.append('active', active);
 
-      const response = await axios.get(
-        `${API_URL}/services/categories?${queryParams.toString()}`
-      );
+      const response = await api.get(`/services/categories?${queryParams.toString()}`);
       return response.data.data;
     } catch (error) {
       const message =
@@ -33,7 +31,7 @@ export const getCategoryById = createAsyncThunk(
   'services/getCategoryById',
   async (identifier, thunkAPI) => {
     try {
-      const response = await axios.get(`${API_URL}/services/categories/${identifier}`);
+      const response = await api.get(`/services/categories/${identifier}`);
       return response.data.data;
     } catch (error) {
       const message =
@@ -56,9 +54,7 @@ export const getSubServicesByCategory = createAsyncThunk(
       if (active !== undefined) queryParams.append('active', active);
       if (popular !== undefined) queryParams.append('popular', popular);
 
-      const response = await axios.get(
-        `${API_URL}/services/categories/${categoryId}/subservices?${queryParams.toString()}`
-      );
+      const response = await api.get(`/services/categories/${categoryId}/subservices?${queryParams.toString()}`);
       return response.data.data;
     } catch (error) {
       const message =
@@ -75,7 +71,7 @@ export const getSubServiceById = createAsyncThunk(
   'services/getSubServiceById',
   async (identifier, thunkAPI) => {
     try {
-      const response = await axios.get(`${API_URL}/services/subservices/${identifier}`);
+      const response = await api.get(`/services/subservices/${identifier}`);
       return response.data.data;
     } catch (error) {
       const message =
@@ -94,11 +90,7 @@ export const createCategory = createAsyncThunk(
   'services/createCategory',
   async (categoryData, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/services/admin/categories`,
-        categoryData,
-        { withCredentials: true }
-      );
+      const response = await api.post('/services/admin/categories', categoryData);
       return response.data.data;
     } catch (error) {
       const message =
@@ -115,11 +107,7 @@ export const updateCategory = createAsyncThunk(
   'services/updateCategory',
   async ({ id, categoryData }, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${API_URL}/services/admin/categories/${id}`,
-        categoryData,
-        { withCredentials: true }
-      );
+      const response = await api.put(`/services/admin/categories/${id}`, categoryData);
       return response.data.data;
     } catch (error) {
       const message =
@@ -136,9 +124,7 @@ export const deleteCategory = createAsyncThunk(
   'services/deleteCategory',
   async (id, thunkAPI) => {
     try {
-      await axios.delete(`${API_URL}/services/admin/categories/${id}`, {
-        withCredentials: true,
-      });
+      await api.delete(`/services/admin/categories/${id}`);
       return id;
     } catch (error) {
       const message =
@@ -162,10 +148,7 @@ export const getAllSubServices = createAsyncThunk(
       if (active !== undefined) queryParams.append('active', active);
       if (popular !== undefined) queryParams.append('popular', popular);
 
-      const response = await axios.get(
-        `${API_URL}/services/admin/subservices?${queryParams.toString()}`,
-        { withCredentials: true }
-      );
+      const response = await api.get(`/services/admin/subservices?${queryParams.toString()}`);
       return response.data.data;
     } catch (error) {
       const message =
@@ -182,11 +165,7 @@ export const createSubService = createAsyncThunk(
   'services/createSubService',
   async (subServiceData, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/services/admin/subservices`,
-        subServiceData,
-        { withCredentials: true }
-      );
+      const response = await api.post('/services/admin/subservices', subServiceData);
       return response.data.data;
     } catch (error) {
       const message =
@@ -203,11 +182,7 @@ export const updateSubService = createAsyncThunk(
   'services/updateSubService',
   async ({ id, subServiceData }, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${API_URL}/services/admin/subservices/${id}`,
-        subServiceData,
-        { withCredentials: true }
-      );
+      const response = await api.put(`/services/admin/subservices/${id}`, subServiceData);
       return response.data.data;
     } catch (error) {
       const message =
@@ -224,9 +199,7 @@ export const deleteSubService = createAsyncThunk(
   'services/deleteSubService',
   async (id, thunkAPI) => {
     try {
-      await axios.delete(`${API_URL}/services/admin/subservices/${id}`, {
-        withCredentials: true,
-      });
+      await api.delete(`/services/admin/subservices/${id}`);
       return id;
     } catch (error) {
       const message =
